@@ -4,10 +4,29 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 
-const TuntilistatForm = () => {
-  // const [rows, setRows] = useState([{}]);
+type RowData = {
+  message: string;
+};
 
-  const addExtraRow = () => {};
+interface IState {
+  rows: RowData[];
+}
+
+const TuntilistatForm = () => {
+  const [state, setState] = useState<IState>({ rows: [] });
+  const [showForm, setShowForm] = useState(false);
+
+  const showFormHandler = () => {
+    setShowForm(!showForm);
+  };
+
+  const addExtraRow = () => {
+    setState({
+      rows: [...state.rows, { message: "new element" }],
+    });
+  };
+
+  const { rows } = state;
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -24,110 +43,169 @@ const TuntilistatForm = () => {
       jobDescription: data.get("jobDescription"),
     });
   };
+  let today = new Date();
+  let dateM =
+    today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
 
+  console.log(dateM);
   return (
     <div>
       <Container maxWidth="md" sx={{ mt: 3, marginBottom: "16px" }}>
         <Typography variant="h2" style={{ textAlign: "center" }}>
           Add tuntilista
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <Box sx={{ mt: 1, textAlign: "right" }}>
-            <TextField
-              id="worker"
-              name="worker"
-              margin="normal"
-              style={{ width: "450px", margin: "5px" }}
-              type="text"
-              label="Työntekijä(nimi ja sukunimi)"
-              variant="outlined"
-              fullWidth
-            />
-            <TextField
-              id="period"
-              name="period"
-              margin="normal"
-              style={{ width: "450px", margin: "5px" }}
-              type="text"
-              label="Ajalta"
-              variant="outlined"
-              fullWidth
-            />
-            <TextField
-              id="companyName"
-              name="company"
-              margin="normal"
-              style={{ width: "450px", margin: "5px" }}
-              type="text"
-              label="Tilaaja"
-              variant="outlined"
-              fullWidth
-            />
-            <TextField
-              name="address"
-              id="address"
-              margin="normal"
-              style={{ width: "450px", margin: "5px" }}
-              type="text"
-              label="Työmaa"
-              variant="outlined"
-              fullWidth
-            />
-            <TextField
-              id="addressNumber"
-              name="number"
-              margin="normal"
-              style={{ width: "450px", margin: "5px" }}
-              type="text"
-              label="Työnumero"
-              variant="outlined"
-              fullWidth
-            />
+        <Button onClick={showFormHandler} fullWidth variant="contained">
+          ADD
+        </Button>
+        {showForm && (
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <Box sx={{ mt: 1, textAlign: "right" }}>
+              <TextField
+                id="worker"
+                name="worker"
+                margin="normal"
+                style={{ width: "450px", margin: "5px" }}
+                type="text"
+                label="Työntekijä(nimi ja sukunimi)"
+                variant="outlined"
+                fullWidth
+              />
+              <TextField
+                id="period"
+                name="period"
+                margin="normal"
+                style={{ width: "450px", margin: "5px" }}
+                type="text"
+                label="Ajalta"
+                variant="outlined"
+                fullWidth
+              />
+              <TextField
+                id="companyName"
+                name="company"
+                margin="normal"
+                style={{ width: "450px", margin: "5px" }}
+                type="text"
+                label="Tilaaja"
+                variant="outlined"
+                fullWidth
+              />
+              <TextField
+                name="address"
+                id="address"
+                margin="normal"
+                style={{ width: "450px", margin: "5px" }}
+                type="text"
+                label="Työmaa"
+                variant="outlined"
+                fullWidth
+              />
+              <TextField
+                id="addressNumber"
+                name="number"
+                margin="normal"
+                style={{ width: "450px", margin: "5px" }}
+                type="text"
+                label="Työnumero"
+                variant="outlined"
+                fullWidth
+              />
+            </Box>
+            <Box sx={{ mt: 1, textAlign: "left" }}>
+              <TextField
+                id="date"
+                name="date"
+                margin="normal"
+                style={{ margin: "5px" }}
+                type="date"
+                variant="outlined"
+                fullWidth
+              />
+              <TextField
+                id="timeFrom"
+                name="timeFrom"
+                margin="normal"
+                style={{ margin: "5px" }}
+                type="time"
+                variant="outlined"
+                fullWidth
+              />
+              <TextField
+                id="timeTo"
+                name="timeTo"
+                margin="normal"
+                style={{ margin: "5px" }}
+                type="time"
+                variant="outlined"
+                fullWidth
+              />
+              <TextField
+                id="jobDescription"
+                name="jobDescription"
+                margin="normal"
+                style={{ margin: "5px" }}
+                type="text"
+                label="Työtehtävä"
+                variant="outlined"
+                fullWidth
+              />
+              <AddCircleRoundedIcon onClick={addExtraRow} />
+            </Box>
+            {rows.map((element) => (
+              <Box sx={{ mt: 1, textAlign: "left" }}>
+                <TextField
+                  id="date"
+                  name="date"
+                  margin="normal"
+                  style={{ margin: "5px" }}
+                  type="date"
+                  variant="outlined"
+                  fullWidth
+                />
+                <TextField
+                  id="timeFrom"
+                  name="timeFrom"
+                  margin="normal"
+                  style={{ margin: "5px" }}
+                  type="time"
+                  variant="outlined"
+                  fullWidth
+                />
+                <TextField
+                  id="timeTo"
+                  name="timeTo"
+                  margin="normal"
+                  style={{ margin: "5px" }}
+                  type="time"
+                  variant="outlined"
+                  fullWidth
+                />
+                <TextField
+                  id="jobDescription"
+                  name="jobDescription"
+                  margin="normal"
+                  style={{ margin: "5px" }}
+                  type="text"
+                  label="Työtehtävä"
+                  variant="outlined"
+                  fullWidth
+                />
+                <AddCircleRoundedIcon onClick={addExtraRow} />
+              </Box>
+            ))}
+            <Button type="submit" size="medium" variant="contained">
+              SEND
+            </Button>
+            <Button type="button" size="medium" variant="contained">
+              CANCEL
+            </Button>
           </Box>
-          <Box sx={{ mt: 1, textAlign: "left" }}>
-            <TextField
-              id="date"
-              name="date"
-              margin="normal"
-              style={{ margin: "5px" }}
-              type="date"
-              variant="outlined"
-              fullWidth
-            />
-            <TextField
-              id="timeFrom"
-              name="timeFrom"
-              margin="normal"
-              style={{ margin: "5px" }}
-              type="time"
-              variant="outlined"
-              fullWidth
-            />
-            <TextField
-              id="timeTo"
-              name="timeTo"
-              margin="normal"
-              style={{ margin: "5px" }}
-              type="time"
-              variant="outlined"
-              fullWidth
-            />
-            <TextField
-              id="jobDescription"
-              name="jobDescription"
-              margin="normal"
-              style={{ margin: "5px" }}
-              type="text"
-              label="Työtehtävä"
-              variant="outlined"
-              fullWidth
-            />
-            <AddCircleRoundedIcon onClick={addExtraRow} />
-          </Box>
-          <Button type="submit" fullWidth variant="contained">
-            SUBMIT
-          </Button>
-        </Box>
+        )}
       </Container>
     </div>
   );
