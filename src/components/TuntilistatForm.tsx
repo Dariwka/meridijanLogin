@@ -94,14 +94,6 @@ const TuntilistatForm = () => {
     });
   };
 
-  /*  const deleteTableRow = (arr: any, id: any) => {
-    const objWithIndex = arr.findIndex((obj) => obj.id === id);
-    if (objWithIndex > -1) {
-      arr.splice(objWithIndex, 1);
-      return arr;
-    }
-  }; */
-
   const handleInputChange = (e: any, index: any) => {
     const { name, value } = e.target;
     console.log(name, value);
