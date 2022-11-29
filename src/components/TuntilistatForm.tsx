@@ -45,7 +45,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 type RowData = {
-  message: string;
+  id: number;
+  date: string;
+  jobDescription: string;
+  timeFrom: string;
+  timeTo: string;
+  hours: string;
+  extraHours: string;
+  doubleExtraHours: string;
 };
 
 interface IState {
@@ -62,16 +69,46 @@ const TuntilistatForm = () => {
 
   const addExtraRow = () => {
     setState({
-      rows: [...state.rows, { message: "new element" }],
+      rows: [
+        ...state.rows,
+        {
+          id: rows.length + 1,
+          date: "",
+          jobDescription: "",
+          timeFrom: "",
+          timeTo: "",
+          hours: "",
+          extraHours: "",
+          doubleExtraHours: "",
+        },
+      ],
     });
     console.log("clicked add");
   };
 
   const { rows } = state;
 
-  const deleteTableRow = () => {};
+  const deleteTableRow = (id: any) => {
+    setState({
+      rows: [...state.rows.filter((el) => el.id !== id)],
+    });
+  };
 
-  const handleChange = () => {};
+  /*  const deleteTableRow = (arr: any, id: any) => {
+    const objWithIndex = arr.findIndex((obj) => obj.id === id);
+    if (objWithIndex > -1) {
+      arr.splice(objWithIndex, 1);
+      return arr;
+    }
+  }; */
+
+  const handleInputChange = (e: any, index: any) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    // const list = [...state.rows];
+    // list[index][name] = value;
+    // setState(list);
+  };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -192,20 +229,21 @@ const TuntilistatForm = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((element, index) => (
-                    <StyledTableRow key={index}>
+                  {rows.map((element, i) => (
+                    <StyledTableRow key={element.id}>
                       <StyledTableCell>
                         <TextField
-                          id="date"
+                          value={element.date}
                           name="date"
                           type="date"
                           variant="outlined"
                           fullWidth
+                          onChange={(e) => handleInputChange(e, i)}
                         />
                       </StyledTableCell>
                       <StyledTableCell>
                         <TextField
-                          id="jobDescription"
+                          value={element.jobDescription}
                           name="jobDescription"
                           margin="normal"
                           style={{ margin: "5px" }}
@@ -213,65 +251,73 @@ const TuntilistatForm = () => {
                           label="Työtehtävä"
                           variant="outlined"
                           fullWidth
+                          onChange={(e) => handleInputChange(e, i)}
                         />
                       </StyledTableCell>
                       <StyledTableCell>
                         <TextField
-                          id="timeFrom"
+                          value={element.timeFrom}
                           name="timeFrom"
                           margin="normal"
                           style={{ margin: "5px" }}
                           type="time"
                           variant="outlined"
                           fullWidth
+                          onChange={(e) => handleInputChange(e, i)}
                         />
                       </StyledTableCell>
                       <StyledTableCell>
                         <TextField
-                          id="timeTo"
+                          value={element.timeTo}
                           name="timeTo"
                           margin="normal"
                           style={{ margin: "5px" }}
                           type="time"
                           variant="outlined"
                           fullWidth
+                          onChange={(e) => handleInputChange(e, i)}
                         />
                       </StyledTableCell>
                       <StyledTableCell>
                         <TextField
-                          id="hours"
+                          value={element.hours}
                           name="hours"
                           margin="normal"
                           style={{ margin: "5px" }}
                           type="number"
                           variant="outlined"
                           fullWidth
+                          onChange={(e) => handleInputChange(e, i)}
                         />
                       </StyledTableCell>
                       <StyledTableCell>
                         <TextField
-                          id="extraHours"
+                          value={element.extraHours}
                           name="extraHours"
                           margin="normal"
                           style={{ margin: "5px" }}
                           type="number"
                           variant="outlined"
                           fullWidth
+                          onChange={(e) => handleInputChange(e, i)}
                         />
                       </StyledTableCell>
                       <StyledTableCell>
                         <TextField
-                          id="doubleExtraHours"
+                          value={element.doubleExtraHours}
                           name="doubleExtraHours"
                           margin="normal"
                           style={{ margin: "5px" }}
                           type="number"
                           variant="outlined"
                           fullWidth
+                          onChange={(e) => handleInputChange(e, i)}
                         />
                       </StyledTableCell>
                       <StyledTableCell>
-                        <RemoveCircleRoundedIcon onClick={deleteTableRow} />
+                        <RemoveCircleRoundedIcon
+                          onClick={() => deleteTableRow(element.id)}
+                        />
                       </StyledTableCell>
                     </StyledTableRow>
                   ))}
