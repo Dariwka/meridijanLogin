@@ -63,6 +63,8 @@ const TuntilistatForm = () => {
   const [state, setState] = useState<IState>({ rows: [] });
   const [showForm, setShowForm] = useState(false);
 
+  console.log("state", state);
+
   const showFormHandler = () => {
     setShowForm(!showForm);
   };
@@ -94,12 +96,15 @@ const TuntilistatForm = () => {
     });
   };
 
-  const handleInputChange = (e: any, index: any) => {
-    const { name, value } = e.target;
-    console.log(name, value);
-    // const list = [...state.rows];
-    // list[index][name] = value;
-    // setState(list);
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+    index: any
+  ) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    const list = [...state.rows];
+    list[index][name] = value;
+    setState(list);
   };
 
   const handleSubmit = (event: any) => {
@@ -111,13 +116,14 @@ const TuntilistatForm = () => {
       company: data.get("companyName"),
       address: data.get("address"),
       number: data.get("addressNumber"),
-      date: data.get("date"),
-      jobDescription: data.get("jobDescription"),
-      timeFrom: data.get("timeFrom"),
-      timeTo: data.get("timeTo"),
-      hours: data.get("hours"),
-      extraHours: data.get("extraHours"),
-      doubleExtraHours: data.get("doubleExtraHours"),
+      // date: data.get("date"),
+      // jobDescription: data.get("jobDescription"),
+      // timeFrom: data.get("timeFrom"),
+      // timeTo: data.get("timeTo"),
+      // hours: data.get("hours"),
+      // extraHours: data.get("extraHours"),
+      // doubleExtraHours: data.get("doubleExtraHours"),
+      rows: state,
     });
   };
   let today = new Date();
@@ -225,7 +231,6 @@ const TuntilistatForm = () => {
                     <StyledTableRow key={element.id}>
                       <StyledTableCell>
                         <TextField
-                          value={element.date}
                           name="date"
                           type="date"
                           variant="outlined"
@@ -235,7 +240,6 @@ const TuntilistatForm = () => {
                       </StyledTableCell>
                       <StyledTableCell>
                         <TextField
-                          value={element.jobDescription}
                           name="jobDescription"
                           margin="normal"
                           style={{ margin: "5px" }}
@@ -248,7 +252,6 @@ const TuntilistatForm = () => {
                       </StyledTableCell>
                       <StyledTableCell>
                         <TextField
-                          value={element.timeFrom}
                           name="timeFrom"
                           margin="normal"
                           style={{ margin: "5px" }}
@@ -260,7 +263,6 @@ const TuntilistatForm = () => {
                       </StyledTableCell>
                       <StyledTableCell>
                         <TextField
-                          value={element.timeTo}
                           name="timeTo"
                           margin="normal"
                           style={{ margin: "5px" }}
@@ -272,7 +274,6 @@ const TuntilistatForm = () => {
                       </StyledTableCell>
                       <StyledTableCell>
                         <TextField
-                          value={element.hours}
                           name="hours"
                           margin="normal"
                           style={{ margin: "5px" }}
@@ -284,7 +285,6 @@ const TuntilistatForm = () => {
                       </StyledTableCell>
                       <StyledTableCell>
                         <TextField
-                          value={element.extraHours}
                           name="extraHours"
                           margin="normal"
                           style={{ margin: "5px" }}
@@ -296,7 +296,6 @@ const TuntilistatForm = () => {
                       </StyledTableCell>
                       <StyledTableCell>
                         <TextField
-                          value={element.doubleExtraHours}
                           name="doubleExtraHours"
                           margin="normal"
                           style={{ margin: "5px" }}
